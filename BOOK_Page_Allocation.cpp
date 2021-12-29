@@ -82,3 +82,4 @@ int main()
     }
     return 0;
 }
+// time complexity: O(N*log(sum(pages)))
