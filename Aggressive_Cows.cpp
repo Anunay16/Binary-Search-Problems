@@ -14,52 +14,62 @@
 using namespace std;
 typedef long long ll;
 
-bool isPossible(vector<ll>& positions, ll gap, ll total_cows) {
-	//putting first cow at pos[0]
-	ll cnt = 1;
-	ll prevPos = positions[0];
-	for (int i = 1; i < (int) positions.size(); i++) {
-        if (positions[i] >= prevPos + gap) {
-            //we can put a cow here
+bool isPossible(vector<ll> &positions, ll gap, ll total_cows)
+{
+    // putting first cow at pos[0]
+    ll cnt = 1;
+    ll prevPos = positions[0];
+    for (int i = 1; i < (int)positions.size(); i++)
+    {
+        if (positions[i] >= prevPos + gap)
+        {
+            // we can put a cow here
             cnt++;
             prevPos = positions[i];
         }
-        if (cnt == total_cows) {
+        if (cnt == total_cows)
+        {
             return true;
         }
     }
     return false;
 }
 
-ll aggcows(ll n, vector<ll>& positions, ll cows) {
-	sort(positions.begin(), positions.end());
-	ll mini = positions[0];
-	ll maxi = positions[n - 1];
-	ll start = 1, end = maxi - mini + 1;
-	ll ans = 0;
-	while (start <= end) {
+ll aggcows(ll n, vector<ll> &positions, ll cows)
+{
+    sort(positions.begin(), positions.end());
+    ll mini = positions[0];
+    ll maxi = positions[n - 1];
+    ll start = 1, end = maxi - mini + 1;
+    ll ans = 0;
+    while (start <= end)
+    {
         ll mid = start + (end - start) / 2;
-        if (isPossible(positions, mid, cows)) {
+        if (isPossible(positions, mid, cows))
+        {
             ans = mid;
             start = mid + 1;
         }
-        else {
+        else
+        {
             end = mid - 1;
         }
     }
     return ans;
 }
 
-            
-int main() {
+int main()
+{
     ll t;
     cin >> t;
-    while (t--) {
+    while (t--)
+    {
         ll n, cows;
         cin >> n >> cows;
         vector<ll> positions(n);
-        for (auto &x: positions) cin >> x;
+        for (auto &x : positions)
+            cin >> x;
         cout << aggcows(n, positions, cows) << "\n";
-    } 
+    }
     return 0;
 }
