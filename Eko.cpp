@@ -20,42 +20,51 @@
 using namespace std;
 typedef long long ll;
 
-bool isPossible(vector<ll>& heights, ll blade_height, const ll wood_needed) {
-	ll wood_taken = 0;
-	for (int i = 0; i < (int) heights.size(); i++) {
+bool isPossible(vector<ll> &heights, ll blade_height, const ll wood_needed)
+{
+    ll wood_taken = 0;
+    for (int i = 0; i < (int)heights.size(); i++)
+    {
         ll canTake = heights[i] - blade_height;
         wood_taken += (canTake > 0) ? canTake : 0;
     }
     return wood_taken >= wood_needed;
 }
 
-ll maxHeight(vector<ll>& heights, const ll wood_needed) {
-	const ll n = heights.size();
-	ll maxi = heights[0];
-	for (ll i = 1; i < n; i++) {
+ll maxHeight(vector<ll> &heights, const ll wood_needed)
+{
+    const ll n = heights.size();
+    ll maxi = heights[0];
+    for (ll i = 1; i < n; i++)
+    {
         maxi = max(maxi, heights[i]);
     }
     ll start = 1;
     ll end = maxi;
     ll ans = 0;
-    while (start <= end) {
+    while (start <= end)
+    {
         ll mid = start + (end - start) / 2;
-        if (isPossible(heights, mid, wood_needed)) {
+        if (isPossible(heights, mid, wood_needed))
+        {
             ans = mid;
             start = mid + 1;
         }
-        else {
+        else
+        {
             end = mid - 1;
         }
     }
     return ans;
 }
 
-int main() {
-	ll n, m;
-	cin >> n >> m;
-	vector<ll> heights(n);
-	for (ll &x: heights) {
+int main()
+{
+    ll n, m;
+    cin >> n >> m;
+    vector<ll> heights(n);
+    for (ll &x : heights)
+    {
         cin >> x;
     }
     cout << maxHeight(heights, m) << "\n";
